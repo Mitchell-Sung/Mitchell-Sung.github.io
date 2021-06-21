@@ -48,7 +48,7 @@
     <meta name="referrer" content="no-referrer-when-downgrade" />
 
      <!--title below is coming from _includes/dynamic_title-->
-    <meta property="og:site_name" content="Welcome to Mitchell Blog" />
+    <meta property="og:site_name" content="Welcome to Mitchell' Blog" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="What is Redux" />
     <meta property="og:description" content="" />
@@ -61,7 +61,7 @@
     <meta name="twitter:url" content="https://Mitchell-Sung.github.io/" />
     <meta name="twitter:image" content="https://Mitchell-Sung.github.io/assets/built/images/reduxCover.png" />
     <meta name="twitter:label1" content="Written by" />
-    <meta name="twitter:data1" content="Welcome to Mitchell Blog" />
+    <meta name="twitter:data1" content="Welcome to Mitchell' Blog" />
     <meta name="twitter:site" content="@" />
     <meta name="twitter:creator" content="@" />
     <meta property="og:image:width" content="2000" />
@@ -73,7 +73,7 @@
     "@type": "Website",
     "publisher": {
         "@type": "Organization",
-        "name": "Welcome to Mitchell Blog",
+        "name": "Welcome to Mitchell' Blog",
         "logo": "https://Mitchell-Sung.github.io/"
     },
     "url": "https://Mitchell-Sung.github.io/redux/",
@@ -119,14 +119,15 @@ into the {body} of the default.hbs template -->
     <div class="site-nav-left">
         
             
-                <a class="site-nav-logo" href="https://Mitchell-Sung.github.io/">Welcome to Mitchell Blog</a>
+                <a class="site-nav-logo" href="https://Mitchell-Sung.github.io/">Welcome to Mitchell' Blog</a>
             
         
         
             <ul class="nav" role="menu">
     <li class="nav-home" role="menuitem"><a href="/">Home</a></li>
-    <li class="nav-about" role="menuitem"><a href="/about/">About</a></li>
-    <li class="nav-jekyll" role="menuitem"><a href="/redux/">Redux</a></li>
+    <li class="nav-about" role="menuitem"><a href="/redux/">Redux</a></li>
+    <li class="nav-jekyll" role="menuitem"><a href="/about/">Project</a></li>
+    <li class="nav-jekyll" role="menuitem"><a href="/video/">Video</a></li>
     <!-- <li class="nav-jekyll" role="menuitem"><a href="/tag/jekyll/">Redux</a></li> -->
 
     <!-- <li class="nav-python" role="menuitem"><a href="/tag/python/">Python</a></li>
@@ -177,22 +178,159 @@ into the {body} of the default.hbs template -->
 
             <section class="post-full-content">
                 <div class="kg-card-markdown">
-                    <p>Ghost is professional publishing platform designed for modern journalism. This is a demo site of a basic Ghost install to give you a general sense of what a new Ghost site looks like when set up for the first time.</p>
+                    <h2 id="why-do-we-need-redux">Why do we need Redux?</h2>
+<p>Before, I share the details about what ReduxJS is and how it works with you, I will take a look at the problem that Redux seems to solve. This should do a good job of answering one of the most common questions that people tend to ask when they learn about ReduxJS, which is, “Well, why should I use that?” The question that ReduxJS aims to answer is an extremely common one is that “What’s the best way for us to manage state in our application?”</p>
+
+<p>For example, we could take a rather extreme position and have one central state contained by the route component, and then have it pass down pieces of that state to all its children. Since once React app reaches any kind of size, we will have to deal with an immense amount of props drilling, and when we have to pass props through a component that does not use them but just passes it onto its children. It is clear that a single state contained by the root component is probably not the way to go.</p>
 
 <blockquote>
-  <p>If you’d like to set up a site like this for yourself, head over to <a href="https://ghost.org/">Ghost.org</a> and start a free 14 day trial to give Ghost a try!</p>
+  <p><em>State management is the hardest problem in building UI applications.</em></p>
 </blockquote>
 
-<p>If you’re a developer: Ghost is a completely open source (MIT) Node.js application built on a JSON API with an Ember.js admin client. It works with MySQL and SQLite, and is publicly available <a href="https://github.com/TryGhost/ghost">on Github</a>.</p>
+<p><img src="/assets/built/images/img_01.jpg" alt="componentChange" /></p>
 
-<p>If you need help with using Ghost, you’ll find a ton of useful articles on <a href="https://help.ghost.org/">our knowledgebase</a>, as well as extensive <a href="https://docs.ghost.org/">developer documentation</a>.</p>
+<p>So, if we were to take this idea of global state and solve its main problem by adding some strict rules and organization to it? In fact, that is exactly what Redux aims to do, and we’re going to take a look at how it does this.</p>
 
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nx">React</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">react</span><span class="dl">'</span><span class="p">;</span>
+<h2 id="how-does-redux-work">How does Redux work?</h2>
+<p>We have a pretty good idea of the major problems Redux was created to solve, namely props drilling, state sharing, and global state chaos. In addition, we learned about both the benefits and perhaps more importantly the rather crippling drawbacks of having a single, unrestricted global state that’s accessible by all our components. That being said, one of the core concepts of Redux is that we have one central, global state called the store that all our components can access.</p>
 
-  <span class="kd">const</span> <span class="nx">test</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
-    <span class="c1">// write code</span>
-  <span class="p">}</span>
+<p><img src="/assets/built/images/img_02.jpg" alt="globalState" /></p>
+
+<p>Redux store is essentially a big J-son object that serves as the single source of truth for all of our components, and in theory it can hold any kind of data that we need it to. For example, Redux Store can hold data about the users, such as whether or not the user is logged in, the user’s name, age, and bio, and what other data we might load from the server. Basically, anything that we load from a server or any internal application state that we need to keep track of can be put into the Redux Store. So, in order to see how Redux solves this problem, let’s take a look at the two other pieces of the Redux flow.</p>
+
+<p><img src="/assets/built/images/img_03.jpg" alt="globalState" /></p>
+
+<h2 id="adding-redux-to-a-react-app">Adding Redux to a React App</h2>
+<p>Open up a terminal inside your directory, and then run npm install redux and react-redux.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># npm</span>
+npm <span class="nb">install </span>redux react-redux redux-devtools-extension
+
+<span class="c"># yarn</span>
+yarn add redux react-redux redux-devtools-extension
 </code></pre></div></div>
+
+<p><strong>Create a Redux Store</strong></p>
+
+<p>Create a file named <code class="language-plaintext highlighter-rouge">src/app/store.js</code>. Import the <code class="language-plaintext highlighter-rouge">configureStore</code> API from Redux Toolkit. We’ll start by creating an empty Redux store, and exporting it:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">configureStore</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">@reduxjs/toolkit</span><span class="dl">'</span>
+
+<span class="k">export</span> <span class="k">default</span> <span class="nx">configureStore</span><span class="p">({</span>
+  <span class="na">reducer</span><span class="p">:</span> <span class="p">{}</span>
+<span class="p">})</span>
+</code></pre></div></div>
+
+<p>This creates a Redux store, and also automatically configure the Redux DevTools extension so that you can inspect the store while developing.</p>
+
+<p><strong>Provide the Redux Store to React</strong></p>
+
+<p>Once the store is created, we can make it available to our React components by putting a React-Redux <code class="language-plaintext highlighter-rouge">&lt;Provider&gt;</code> around our application in <code class="language-plaintext highlighter-rouge">src/index.js</code>. Import the Redux store we just created, put a <code class="language-plaintext highlighter-rouge">&lt;Provider&gt;</code> around your <code class="language-plaintext highlighter-rouge">&lt;App&gt;</code>, and pass the store as a prop:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nx">React</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">react</span><span class="dl">'</span>
+<span class="k">import</span> <span class="nx">ReactDOM</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">react-dom</span><span class="dl">'</span>
+<span class="k">import</span> <span class="dl">'</span><span class="s1">./index.css</span><span class="dl">'</span>
+<span class="k">import</span> <span class="nx">App</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">./App</span><span class="dl">'</span>
+<span class="k">import</span> <span class="nx">store</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">./app/store</span><span class="dl">'</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">Provider</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">react-redux</span><span class="dl">'</span>
+
+<span class="nx">ReactDOM</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span>
+  <span class="o">&lt;</span><span class="nx">Provider</span> <span class="nx">store</span><span class="o">=</span><span class="p">{</span><span class="nx">store</span><span class="p">}</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">App</span> <span class="o">/&gt;</span>
+  <span class="o">&lt;</span><span class="sr">/Provider&gt;</span><span class="err">,
+</span>  <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">'</span><span class="s1">root</span><span class="dl">'</span><span class="p">)</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<p><strong>Create a Redux State Slice</strong></p>
+
+<p>Add a new file named <code class="language-plaintext highlighter-rouge">src/features/counter/counterSlice.js</code>. In that file, import the <code class="language-plaintext highlighter-rouge">createSlice</code> API from Redux Toolkit.</p>
+
+<p>Creating a slice requires a string name to identify the slice, an initial state value, and one or more reducer functions to define how the state can be updated. Once a slice is created, we can export the generated Redux action creators and the reducer function for the whole slice.</p>
+
+<p>Redux requires that we write all state updates immutably, by making copies of data and updating the copies. However, Redux Toolkit’s <code class="language-plaintext highlighter-rouge">createSlice</code> and <code class="language-plaintext highlighter-rouge">createReducer</code> APIs use Immer inside to allow us to write “mutating” update logic that becomes correct immutable updates.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">createSlice</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">@reduxjs/toolkit</span><span class="dl">'</span>
+
+<span class="k">export</span> <span class="kd">const</span> <span class="nx">counterSlice</span> <span class="o">=</span> <span class="nx">createSlice</span><span class="p">({</span>
+  <span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">counter</span><span class="dl">'</span><span class="p">,</span>
+  <span class="na">initialState</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">value</span><span class="p">:</span> <span class="mi">0</span>
+  <span class="p">},</span>
+  <span class="na">reducers</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">increment</span><span class="p">:</span> <span class="nx">state</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="nx">state</span><span class="p">.</span><span class="nx">value</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="p">},</span>
+    <span class="na">decrement</span><span class="p">:</span> <span class="nx">state</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="nx">state</span><span class="p">.</span><span class="nx">value</span> <span class="o">-=</span> <span class="mi">1</span>
+    <span class="p">},</span>
+    <span class="na">incrementByAmount</span><span class="p">:</span> <span class="p">(</span><span class="nx">state</span><span class="p">,</span> <span class="nx">action</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="nx">state</span><span class="p">.</span><span class="nx">value</span> <span class="o">+=</span> <span class="nx">action</span><span class="p">.</span><span class="nx">payload</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">})</span>
+
+<span class="k">export</span> <span class="kd">const</span> <span class="p">{</span> <span class="nx">increment</span><span class="p">,</span> <span class="nx">decrement</span><span class="p">,</span> <span class="nx">incrementByAmount</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">counterSlice</span><span class="p">.</span><span class="nx">actions</span>
+
+<span class="k">export</span> <span class="k">default</span> <span class="nx">counterSlice</span><span class="p">.</span><span class="nx">reducer</span>
+</code></pre></div></div>
+
+<p><strong>Add Slice Reducers to the Store</strong></p>
+
+<p>Next, we need to import the reducer function from the counter slice and add it to our store. By defining a field inside the <code class="language-plaintext highlighter-rouge">reducers</code> parameter, we tell the store to use this slice reducer function to handle all updates to that state.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">configureStore</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">@reduxjs/toolkit</span><span class="dl">'</span>
+<span class="k">import</span> <span class="nx">counterReducer</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">../features/counter/counterSlice</span><span class="dl">'</span>
+
+<span class="k">export</span> <span class="k">default</span> <span class="nx">configureStore</span><span class="p">({</span>
+  <span class="na">reducer</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">counter</span><span class="p">:</span> <span class="nx">counterReducer</span>
+  <span class="p">}</span>
+<span class="p">})</span>
+</code></pre></div></div>
+
+<p><strong>Use Redux State and Actions in React Components</strong></p>
+
+<p>Now we can use the React-Redux hooks to let React components interact with the Redux store. We can read data from the store with <code class="language-plaintext highlighter-rouge">useSelector</code>, and dispatch actions using <code class="language-plaintext highlighter-rouge">useDispatch</code>. Create a <code class="language-plaintext highlighter-rouge">src/features/counter/Counter.js</code> file with a <code class="language-plaintext highlighter-rouge">&lt;Counter&gt;</code> component inside, then import that component into <code class="language-plaintext highlighter-rouge">App.js</code> and render it inside of <code class="language-plaintext highlighter-rouge">&lt;App&gt;</code>.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nx">React</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">react</span><span class="dl">'</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">useSelector</span><span class="p">,</span> <span class="nx">useDispatch</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">react-redux</span><span class="dl">'</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">decrement</span><span class="p">,</span> <span class="nx">increment</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">./counterSlice</span><span class="dl">'</span>
+<span class="k">import</span> <span class="nx">styles</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">./Counter.module.css</span><span class="dl">'</span>
+
+<span class="k">export</span> <span class="kd">function</span> <span class="nx">Counter</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">count</span> <span class="o">=</span> <span class="nx">useSelector</span><span class="p">(</span><span class="nx">state</span> <span class="o">=&gt;</span> <span class="nx">state</span><span class="p">.</span><span class="nx">counter</span><span class="p">.</span><span class="nx">value</span><span class="p">)</span>
+  <span class="kd">const</span> <span class="nx">dispatch</span> <span class="o">=</span> <span class="nx">useDispatch</span><span class="p">()</span>
+
+  <span class="k">return</span> <span class="p">(</span>
+    <span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">button</span>
+          <span class="nx">aria</span><span class="o">-</span><span class="nx">label</span><span class="o">=</span><span class="dl">"</span><span class="s2">Increment value</span><span class="dl">"</span>
+          <span class="nx">onClick</span><span class="o">=</span><span class="p">{()</span> <span class="o">=&gt;</span> <span class="nx">dispatch</span><span class="p">(</span><span class="nx">increment</span><span class="p">())}</span>
+        <span class="o">&gt;</span>
+          <span class="nx">Increment</span>
+        <span class="o">&lt;</span><span class="sr">/button</span><span class="err">&gt;
+</span>        <span class="o">&lt;</span><span class="nx">span</span><span class="o">&gt;</span><span class="p">{</span><span class="nx">count</span><span class="p">}</span><span class="o">&lt;</span><span class="sr">/span</span><span class="err">&gt;
+</span>        <span class="o">&lt;</span><span class="nx">button</span>
+          <span class="nx">aria</span><span class="o">-</span><span class="nx">label</span><span class="o">=</span><span class="dl">"</span><span class="s2">Decrement value</span><span class="dl">"</span>
+          <span class="nx">onClick</span><span class="o">=</span><span class="p">{()</span> <span class="o">=&gt;</span> <span class="nx">dispatch</span><span class="p">(</span><span class="nx">decrement</span><span class="p">())}</span>
+        <span class="o">&gt;</span>
+          <span class="nx">Decrement</span>
+        <span class="o">&lt;</span><span class="sr">/button</span><span class="err">&gt;
+</span>      <span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span>    <span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span>  <span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Now, any time you click the “Increment” and “Decrement buttons:</p>
+
+<ul>
+  <li>The corresponding Redux action will be dispatched to the store</li>
+  <li>The counter slice reducer will see the actions and update its state</li>
+  <li>The <Counter> component will see the new state value from the store and re-render itself with the new data</Counter></li>
+</ul>
 
                 </div>
             </section>
@@ -200,7 +338,7 @@ into the {body} of the default.hbs template -->
             <!-- Email subscribe form at the bottom of the page -->
             <!-- 
                 <section class="subscribe-form">
-                    <h3 class="subscribe-form-title">Subscribe to Welcome to Mitchell Blog</h3>
+                    <h3 class="subscribe-form-title">Subscribe to Welcome to Mitchell' Blog</h3>
                     <p>Get the latest posts delivered right to your inbox</p>
                     <form method="post" action="/subscribe/" class="">
     <input class="confirm" type="hidden" name="confirm"  /><input class="location" type="hidden" name="location"  /><input class="referrer" type="hidden" name="referrer"  />
@@ -255,7 +393,7 @@ into the {body} of the default.hbs template -->
     <div class="floating-header-logo">
         <a href="https://Mitchell-Sung.github.io/">
             
-            <span>Welcome to Mitchell Blog</span>
+            <span>Welcome to Mitchell' Blog</span>
         </a>
     </div>
     <span class="floating-header-divider">&mdash;</span>
@@ -295,7 +433,7 @@ into the {body} of the default.hbs template -->
         <!-- The footer at the very bottom of the screen -->
         <footer class="site-footer outer">
             <div class="site-footer-content inner">
-                <section class="copyright"><a href="https://Mitchell-Sung.github.io/">Welcome to Mitchell Blog</a> &copy; 2021</section>
+                <section class="copyright"><a href="https://Mitchell-Sung.github.io/">Welcome to Mitchell' Blog</a> &copy; 2021</section>
                 <section class="poweredby">Proudly published with <a href="https://jekyllrb.com/">Jekyll</a> &
                     <a href="https://pages.github.com/" target="_blank" rel="noopener">GitHub Pages</a> using
                     <a href="https://github.com/jekyllt/jasper2" target="_blank" rel="noopener">Jasper2</a></section>
@@ -316,7 +454,7 @@ into the {body} of the default.hbs template -->
             <a class="subscribe-overlay-close" href="#"></a>
             <div class="subscribe-overlay-content">
                 
-                <h1 class="subscribe-overlay-title">Subscribe to Welcome to Mitchell Blog</h1>
+                <h1 class="subscribe-overlay-title">Subscribe to Welcome to Mitchell' Blog</h1>
                 <p class="subscribe-overlay-description">Stay up to date! Get all the latest &amp; greatest posts delivered straight to your inbox</p>
                 <form method="post" action="/subscribe/" class="">
     <input class="confirm" type="hidden" name="confirm"  /><input class="location" type="hidden" name="location"  /><input class="referrer" type="hidden" name="referrer"  />
