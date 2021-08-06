@@ -51,18 +51,7 @@
     <meta property="og:site_name" content="Welcome to Mitchell' Blog" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Project" />
-    <meta property="og:description" content="Click here : [Link GitHub](https://github.com/Mitchell-Sung/Mitchell-Blog)
-
-![globalState](/assets/built/images/img_10.jpg)
-
-![globalState](/assets/built/images/img_04.jpg)
-
-![globalState](/assets/built/images/img_05.jpg)
-
-![globalState](/assets/built/images/img_06.jpg)
-
-![globalState](/assets/built/images/img_07.jpg)
-" />
+    <meta property="og:description" content="## Adding Redux to a React App ~~~bash # Install redux and react-redux npm install redux react-redux ~~~ Create a new file inside our source directory called Store JS. This is where we put our logic for setting up our Redux store. ~~~javascript export const history = createBrowserHistory(); const sagaMiddleware" />
     <meta property="og:url" content="https://Mitchell-Sung.github.io/about/" />
     <meta property="og:image" content="https://Mitchell-Sung.github.io/assets/built/images/cover_01.jpg" />
     <meta property="article:publisher" content="https://www.facebook.com/" />
@@ -71,18 +60,7 @@
     <meta property="article:modified_time" content="" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Project" />
-    <meta name="twitter:description" content="Click here : [Link GitHub](https://github.com/Mitchell-Sung/Mitchell-Blog)
-
-![globalState](/assets/built/images/img_10.jpg)
-
-![globalState](/assets/built/images/img_04.jpg)
-
-![globalState](/assets/built/images/img_05.jpg)
-
-![globalState](/assets/built/images/img_06.jpg)
-
-![globalState](/assets/built/images/img_07.jpg)
-" />
+    <meta name="twitter:description" content="## Adding Redux to a React App ~~~bash # Install redux and react-redux npm install redux react-redux ~~~ Create a new file inside our source directory called Store JS. This is where we put our logic for setting up our Redux store. ~~~javascript export const history = createBrowserHistory(); const sagaMiddleware" />
     <meta name="twitter:url" content="https://Mitchell-Sung.github.io/" />
     <meta name="twitter:image" content="https://Mitchell-Sung.github.io/assets/built/images/cover_01.jpg" />
     <meta name="twitter:label1" content="Written by" />
@@ -112,18 +90,7 @@
         "@type": "WebPage",
         "@id": "https://Mitchell-Sung.github.io/about/"
     },
-    "description": "Click here : [Link GitHub](https://github.com/Mitchell-Sung/Mitchell-Blog)
-
-![globalState](/assets/built/images/img_10.jpg)
-
-![globalState](/assets/built/images/img_04.jpg)
-
-![globalState](/assets/built/images/img_05.jpg)
-
-![globalState](/assets/built/images/img_06.jpg)
-
-![globalState](/assets/built/images/img_07.jpg)
-"
+    "description": "## Adding Redux to a React App ~~~bash # Install redux and react-redux npm install redux react-redux ~~~ Create a new file inside our source directory called Store JS. This is where we put our logic for setting up our Redux store. ~~~javascript export const history = createBrowserHistory(); const sagaMiddleware"
 }
     </script>
 
@@ -206,9 +173,153 @@ into the {body} of the default.hbs template -->
             
 
             <section class="post-full-content">
-                <p>Click here : <a href="https://github.com/Mitchell-Sung/Mitchell-Blog">Link GitHub</a></p>
+                <h2 id="adding-redux-to-a-react-app">Adding Redux to a React App</h2>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Install redux and react-redux</span>
+npm <span class="nb">install </span>redux react-redux
+</code></pre></div></div>
 
-<p><img src="/assets/built/images/img_10.jpg" alt="globalState" /></p>
+<p>Create a new file inside our source directory called Store JS. This is where we put our logic for setting up our Redux store.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">export</span> <span class="kd">const</span> <span class="nx">history</span> <span class="o">=</span> <span class="nx">createBrowserHistory</span><span class="p">();</span>
+
+<span class="kd">const</span> <span class="nx">sagaMiddleware</span> <span class="o">=</span> <span class="nx">createSagaMiddleware</span><span class="p">();</span>
+
+<span class="kd">const</span> <span class="nx">initialState</span> <span class="o">=</span> <span class="p">{};</span>
+
+<span class="kd">const</span> <span class="nx">middlewares</span> <span class="o">=</span> <span class="p">[</span><span class="nx">sagaMiddleware</span><span class="p">,</span> <span class="nx">routerMiddleware</span><span class="p">(</span><span class="nx">history</span><span class="p">)];</span>
+<span class="kd">const</span> <span class="nx">devtools</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nx">__REDUX_DEVTOOLS_EXTENSION_COMPOSE__</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">composeEnhancer</span> <span class="o">=</span> 
+  <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">NODE_ENV</span> <span class="o">===</span> <span class="dl">"</span><span class="s2">production</span><span class="dl">"</span> <span class="p">?</span> <span class="nx">compose</span> <span class="p">:</span> <span class="nx">devtools</span> <span class="o">||</span> <span class="nx">compose</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">store</span> <span class="o">=</span> <span class="nx">createStore</span><span class="p">(</span>
+  <span class="nx">createRootReducer</span><span class="p">(</span><span class="nx">history</span><span class="p">),</span>
+  <span class="nx">initialState</span><span class="p">,</span>
+  <span class="nx">composeEnhancer</span><span class="p">(</span><span class="nx">applyMiddleware</span><span class="p">(...</span><span class="nx">middlewares</span><span class="p">))</span>
+<span class="p">);</span>
+</code></pre></div></div>
+
+<p>And then, wrap app component with this provider and pass configured store into it.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">App</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+   <span class="k">return</span> <span class="p">(</span>
+    <span class="o">&lt;</span><span class="nx">Provider</span> <span class="nx">store</span><span class="o">=</span><span class="p">{</span><span class="nx">store</span><span class="p">}</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="nx">ConnectedRouter</span> <span class="nx">history</span><span class="o">=</span><span class="p">{</span><span class="nx">history</span><span class="p">}</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">MyRouter</span><span class="o">/&gt;</span>
+      <span class="o">&lt;</span><span class="sr">/ConnectedRouter</span><span class="err">&gt;
+</span>    <span class="o">&lt;</span><span class="sr">/Provider</span><span class="err">&gt;
+</span>  <span class="p">);</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<h2 id="creating-redux-actions">Creating Redux actions</h2>
+<p>Now, we are going to create actions that define a create to do action that this app will fire whenever the user types something in the new to do form component that we created and presses the create to do button.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// WRITE POST</span>
+<span class="k">export</span> <span class="kd">const</span> <span class="nx">POST_WRITE_REQUEST</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">POST_WRITE_REQUEST</span><span class="dl">'</span><span class="p">;</span>
+<span class="k">export</span> <span class="kd">const</span> <span class="nx">POST_WRITE_FAILURE</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">POST_WRITE_FAILURE</span><span class="dl">'</span><span class="p">;</span>
+<span class="k">export</span> <span class="kd">const</span> <span class="nx">POST_WRITE_SUCCESS</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">POST_WRITE_SUCCESS</span><span class="dl">'</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h2 id="creating-reducers">Creating Reducers</h2>
+<p>Create postReducer.js file in Reducer directory. Reducers take two arguments. The first argument is state, and the second argument is action.</p>
+
+<p>Every time any action is fired from anywhere in this application our reducer will get called. When this happens, the two arguments that will get passed to a reducer are the current state of whatever resource the reducer is managing. In this case, it’ll be an object of the current post items in this application and the second argument is the action that was triggered which will be an object with type and payload properties.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span>
+	<span class="nx">POST_WRITE_REQUEST</span><span class="p">,</span>
+	<span class="nx">POST_WRITE_FAILURE</span><span class="p">,</span>
+	<span class="nx">POST_WRITE_SUCCESS</span><span class="p">,</span>
+<span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">../types</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">initialState</span> <span class="o">=</span> <span class="p">{</span>
+	<span class="na">isAuthenticated</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+	<span class="na">posts</span><span class="p">:</span> <span class="p">[],</span>
+	<span class="na">postDetail</span><span class="p">:</span> <span class="dl">''</span><span class="p">,</span>
+	<span class="na">postCount</span><span class="p">:</span> <span class="dl">''</span><span class="p">,</span>
+	<span class="na">loading</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+	<span class="na">error</span><span class="p">:</span> <span class="dl">''</span><span class="p">,</span>
+	<span class="na">creatorId</span><span class="p">:</span> <span class="dl">''</span><span class="p">,</span>
+	<span class="na">categoryFindResult</span><span class="p">:</span> <span class="dl">''</span><span class="p">,</span>
+	<span class="na">title</span><span class="p">:</span> <span class="dl">''</span><span class="p">,</span>
+	<span class="na">searchBy</span><span class="p">:</span> <span class="dl">''</span><span class="p">,</span>
+	<span class="na">searchResult</span><span class="p">:</span> <span class="dl">''</span><span class="p">,</span>
+<span class="p">};</span>
+
+<span class="k">export</span> <span class="k">default</span> <span class="kd">function</span> <span class="nx">postReducer</span><span class="p">(</span><span class="nx">state</span> <span class="o">=</span> <span class="nx">initialState</span><span class="p">,</span> <span class="nx">action</span><span class="p">)</span> <span class="p">{</span>
+	<span class="k">switch</span> <span class="p">(</span><span class="nx">action</span><span class="p">.</span><span class="nx">type</span><span class="p">)</span> <span class="p">{</span>
+		<span class="k">case</span> <span class="nx">POST_WRITE_REQUEST</span><span class="p">:</span>
+			<span class="k">return</span> <span class="p">{</span>
+				<span class="p">...</span><span class="nx">state</span><span class="p">,</span>
+				<span class="na">posts</span><span class="p">:</span> <span class="p">[],</span>
+				<span class="na">loading</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+			<span class="p">};</span>
+		<span class="k">case</span> <span class="nx">POST_WRITE_SUCCESS</span><span class="p">:</span>
+			<span class="k">return</span> <span class="p">{</span>
+				<span class="p">...</span><span class="nx">state</span><span class="p">,</span>
+				<span class="na">loading</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+			<span class="p">};</span>
+		<span class="k">case</span> <span class="nx">POST_WRITE_FAILURE</span><span class="p">:</span>
+			<span class="k">return</span> <span class="p">{</span>
+				<span class="p">...</span><span class="nx">state</span><span class="p">,</span>
+				<span class="na">error</span><span class="p">:</span> <span class="nx">action</span><span class="p">.</span><span class="nx">payload</span><span class="p">,</span>
+				<span class="na">loading</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+			<span class="p">};</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="connecting-components-to-the-store">Connecting components to the store</h2>
+<p>Dispatch POST_WRITE_REQUEST action to the store when user want to create a new post.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">useDispatch</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">react-redux</span><span class="dl">'</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">POST_WRITE_REQUEST</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">../redux/types</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">dispatch</span> <span class="o">=</span> <span class="nx">useDispatch</span><span class="p">();</span>
+
+<span class="kd">const</span> <span class="nx">addPostClick</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+	<span class="nx">dispatch</span><span class="p">({</span>
+		<span class="na">type</span><span class="p">:</span> <span class="nx">POST_WRITE_REQUEST</span><span class="p">,</span>
+	<span class="p">});</span>
+<span class="p">};</span>
+
+<span class="kd">const</span> <span class="nx">authLink</span> <span class="o">=</span> <span class="p">(</span>
+		<span class="o">&lt;</span><span class="nx">NavItem</span><span class="o">&gt;</span>
+			<span class="p">{</span><span class="nx">userRole</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">MainJuin</span><span class="dl">'</span> <span class="p">?</span> <span class="p">(</span>
+				<span class="o">&lt;</span><span class="nx">Form</span> <span class="nx">className</span><span class="o">=</span><span class="dl">"</span><span class="s2">col mt-2</span><span class="dl">"</span><span class="o">&gt;</span>
+					<span class="o">&lt;</span><span class="nx">Link</span>
+						<span class="nx">to</span><span class="o">=</span><span class="dl">"</span><span class="s2">/post</span><span class="dl">"</span>
+						<span class="nx">className</span><span class="o">=</span><span class="dl">"</span><span class="s2">btn btn-success block text-white px-3</span><span class="dl">"</span>
+						<span class="nx">onClick</span><span class="o">=</span><span class="p">{</span><span class="nx">addPostClick</span><span class="p">}</span>
+					<span class="o">&gt;</span>
+						<span class="nx">Add</span> <span class="nx">Post</span>
+					<span class="o">&lt;</span><span class="sr">/Link</span><span class="err">&gt;
+</span>				<span class="o">&lt;</span><span class="sr">/Form</span><span class="err">&gt;
+</span>				<span class="p">)</span> <span class="p">:</span> <span class="p">(</span>
+					<span class="dl">''</span>
+				<span class="p">)}</span>
+		<span class="o">&lt;</span><span class="sr">/NavItem</span><span class="err">&gt;
+</span><span class="p">};</span>
+
+<span class="k">export</span> <span class="k">default</span> <span class="nx">AppNavbar</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h2 id="redux-devtools">Redux DevTools</h2>
+<p>We can use something called: Redux Devtools.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">devtools</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nx">__REDUX_DEVTOOLS_EXTENSION_COMPOSE__</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">composeEnhancer</span> <span class="o">=</span> 
+    <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">NODE_ENV</span> <span class="o">===</span> <span class="dl">"</span><span class="s2">production</span><span class="dl">"</span> <span class="p">?</span> <span class="nx">compose</span> <span class="p">:</span> <span class="nx">devtools</span> <span class="o">||</span> <span class="nx">compose</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">store</span> <span class="o">=</span> <span class="nx">createStore</span><span class="p">(</span>
+    <span class="nx">createRootReducer</span><span class="p">(</span><span class="nx">history</span><span class="p">),</span>
+    <span class="nx">initialState</span><span class="p">,</span>
+    <span class="nx">composeEnhancer</span><span class="p">(</span><span class="nx">applyMiddleware</span><span class="p">(...</span><span class="nx">middlewares</span><span class="p">))</span>
+<span class="p">);</span>
+</code></pre></div></div>
+
+<p>Click here : <a href="https://github.com/Mitchell-Sung/Mitchell-Blog">Link GitHub</a></p>
 
 <p><img src="/assets/built/images/img_04.jpg" alt="globalState" /></p>
 
